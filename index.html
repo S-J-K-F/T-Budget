@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+        body {
+            margin:0;
+            padding: 40px;
+            box-sizing: border-box;
+            background-color: #3b3a44;
+        }
+
+        .container{
+            max-width:900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction:column;
+            gap:60px;
+        }
+
+        .header{
+            height:100px;
+            background-color: #8fd34f;
+            border: 2px solid black;
+            text-align: center;
+        }
+        
+        .main-box {
+            height:220px;
+            background-color: #e3e3e3;
+            border: 2px solid black;
+            width: 100%;
+        }
+        
+        .footerbox{
+            height:80px;
+            background-color: #e3e3e3;
+            border:2px solid black;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header"><h1>T-Budget Homepage</h1></div>
+        <div class="main-box">
+            <h2>Budget</h2>
+
+            <label>Monthly Income</label><br>
+            <input type="number" id="income" placeholder="Enter inclome"><br><br>
+            
+            
+            <label>Expense Name:</label><br>
+            <input type="text" id="income" placeholder="Enter inclome"><br><br>            
+
+
+            <label>Expense Amount:</label><br>
+            <input type="number" id="income" placeholder="Enter inclome"><br><br>
+
+            <h3>Expenses</h3>
+            <ul id="expenseList>"ul></ul>
+
+            <p><strong>Total Expenses:</strong> $<span id="totalExpenses">0</span></p>
+            <p><strong>Money Left:</strong> $<span id="moneyLeft">0</span></p>
+
+        </div>
+        <div class="footerbox"></div>
+    </div>
+
+    <script>
+            let totalExpenses = 0;
+            function addExpense(){
+                const income = Number(document.getElementById("income").value);
+                const name = document.getElementById("income").value;
+                const Amount = Number(document.getElementById("expenseAmount").value);
+
+                if(name === "" amount <= 0) {
+                    alert("enterValid expense");
+                    return;
+                }
+
+                const li = document.createElement("li");
+                li.textContent = name + " - $" + amount;
+                document.getElementById("expenseList").appendChild(li);
+
+                totalExpenses += amount;
+                doc
+            }
+
+
+
+
+
+
+    </script>
+</body>
+</html>
