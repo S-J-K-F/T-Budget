@@ -14,8 +14,8 @@ body {
     color: white;
     font-size: 30px;
     position: absolute;
-    top: 320px;
-    left: 415px;
+    top: 500px;
+    left: 410px;
 }
 .Shop{
     position: absolute;
@@ -34,6 +34,11 @@ body {
 }
 .ShopCart{
     position: absolute;
-    top: 470px;
+    top: 590px;
     right: 20px
+}
+#ProfImg{
+    position: absolute;
+    top: 250px;
+    left: 100px;
 }
