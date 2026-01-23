@@ -15,49 +15,52 @@
 
 	    <link rel="stylesheet" type="text/css" href="temp-style.css">
         <style>
-    	    .Home{
-    	        background-color: lightblue;
-    	    }
-
-    	    .Shop{
-    	        background-color: lightblue;
-    	    }
-
-    	    .More{
-    	        background-color: lightblue;
-    	    }
+            .Home{
+                position: absolute;
+                top: 20px;
+                left: 20px;
+            }
+            .container {
+                
+                
+            }
+            body {
+                background-color: #1E1E1E;
+            }
+            #profileName {
+                color: white;
+                font-size: 30px;
+                text-align: center;
+                
+            }
     	</style>
     </head>
 
     <body>
         <main>
 
-            <div class="Home">
+            <div class="Home container-fluid">
                 <button href="index.html" type="button" class="btn btn-primary">Home</button>
             </div>
             
             <div>
-                <p>"Name"</p>
+                <p id="profileName">"Name"</p>
             </div>
             
             <div>
-                <p>Transaction History</p>
+                <button type="button" class="btn btn-secondary">Transaction History</button>
             </div>
             
             <div class="Shop">
-                <button href="shop.html" type="button" class="btn btn-primary">Shop</button>
+                <button href="shop.html" type="button" class="btn btn-success">Shop</button>
             </div>
             
             <div>
                 <p>Budget Left</p>
             </div>
 
-            <div>
-                <p>Shopping Cart</p>
-            </div>
-
             <div class="More">
-                <button href="cart.html" type="button" class="btn btn-primary">More</button>
+                <button href="cart.html" type="button" class="btn btn-secondary">More</button>
             </div>
             
             <div>
@@ -67,6 +70,18 @@
             <div class="container text-center">
                 <img class="rounded-circle" alt="centered image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_lvjjRAVDQ-nBDq_4dy1xCyRjjDaHV-Tqcw&s">
             </div>
+                        <!--This div is for drop downs-->
+            <div class="dropdown">
+                <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    Shopping Cart
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Var 0</a></li>
+                    <li><a class="dropdown-item" href="#">Var 1</a></li>
+                    <li><a class="dropdown-item" href="#">Var 2</a></li>
+                </ul>
+            </div>
+
         </main>
     </body>
 
