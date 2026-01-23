@@ -29,10 +29,10 @@
         }
         
         .main-box {
-            height:220px;
             background-color: #e3e3e3;
             border: 2px solid black;
             width: 100%;
+            padding:20px;
         }
         
         .footerbox{
@@ -60,41 +60,68 @@
             <label>Expense Amount:</label><br>
             <input type="number" id="income" placeholder="Enter inclome"><br><br>
 
+            <button id="addExpenseBtn">Add Expense</button>
+
+
             <h3>Expenses</h3>
             <ul id="expenseList>"ul></ul>
-
+        </div>
+        <div class="footerbox">
             <p><strong>Total Expenses:</strong> $<span id="totalExpenses">0</span></p>
             <p><strong>Money Left:</strong> $<span id="moneyLeft">0</span></p>
-
         </div>
-        <div class="footerbox"></div>
-    </div>
+    </div>Í
+<script>
+    const inputs = document.querySelectorAll("input");
 
-    <script>
-            let totalExpenses = 0;
-            function addExpense(){
-                const income = Number(document.getElementById("income").value);
-                const name = document.getElementById("income").value;
-                const Amount = Number(document.getElementById("expenseAmount").value);
+    const incomeInput = inputs[0];
+    const expenseNameInput = inputs[1];
+    const expenseAmountInput = inputs[2];
 
-                if(name === "" amount <= 0) {
-                    alert("enterValid expense");
-                    return;
-                }
+    const addButton = document.getElementById("addExpenseBtn");
+    const expenseList = document.querySelector("ul");
 
-                const li = document.createElement("li");
-                li.textContent = name + " - $" + amount;
-                document.getElementById("expenseList").appendChild(li);
+    const totalExpensesEl = document.getElementById("totalExpenses");
+    const moneyLeftEl = document.getElementById("moneyLeft");
 
-                totalExpenses += amount;
-                doc
-            }
+    let totalExpenses = 0;
 
+    function updateMoneyLeft() {
+        const income = Number(incomeInput.value) || 0;
+        moneyLeftEl.textContent = income - totalExpenses;
+    }
 
+    function addExpense() {
+        const name = expenseNameInput.value;
+        const amount = Number(expenseAmountInput.value);
 
+        if (name === "" || amount <= 0) {
+            return;
+        }
 
+        const li = document.createElement("li");
+        li.textContent = name + " - $" + amount;
+        expenseList.appendChild(li);
 
+        totalExpenses += amount;
+        totalExpensesEl.textContent = totalExpenses;
 
-    </script>
+        updateMoneyLeft();
+
+        expenseNameInput.value = "";
+        expenseAmountInput.value = "";
+    }
+
+    incomeInput.addEventListener("input", updateMoneyLeft);
+    addButton.addEventListener("click", addExpense);
+
+    expenseAmountInput.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            addExpense();
+        }
+    });
+</script>
+
 </body>
 </html>
+
