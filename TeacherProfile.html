@@ -14,28 +14,9 @@
 
 
 	    <link rel="stylesheet" type="text/css" href="temp-style.css">
-        <style>
-            .Home{
-                position: absolute;
-                top: 20px;
-                left: 20px;
-            }
-            .container {
-                
-                
-            }
-            body {
-                background-color: #1E1E1E;
-            }
-            #profileName {
-                color: white;
-                font-size: 30px;
-                position: absolute;
-                top: 420px;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-    	</style>
+
+
+
     </head>
 
     <body>
@@ -50,7 +31,7 @@
             </div>
             
             <div>
-                <button type="button" class="btn btn-secondary">Transaction History</button>
+                <button type="button" class="TranHist btn btn-secondary">Transaction History</button>
             </div>
             
             <div class="Shop">
@@ -69,18 +50,18 @@
                 <p>Budget Info</p>
             </div>
                         <!--This div is for the profile image-->
-            <div class="container text-center">
+            <div id="ProfImg" class="container text-center">
                 <img class="rounded-circle" alt="centered image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_lvjjRAVDQ-nBDq_4dy1xCyRjjDaHV-Tqcw&s">
             </div>
                         <!--This div is for drop downs-->
             <div class="dropdown">
-                <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                    Shopping Cart
+                <button class="ShopCart btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    Shopping Cart Preview
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Var 0</a></li>
-                    <li><a class="dropdown-item" href="#">Var 1</a></li>
-                    <li><a class="dropdown-item" href="#">Var 2</a></li>
+                    <li class="dropdown-item">Var 0</li>
+                    <li class="dropdown-item">Var 1</li>
+                    <li class="dropdown-item">Var 2</li>
                 </ul>
             </div>
 

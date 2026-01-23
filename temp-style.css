@@ -1,0 +1,39 @@
+.Home{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+.container {
+    
+    
+}
+body {
+    background-color: #1E1E1E;
+}
+#profileName {
+    color: white;
+    font-size: 30px;
+    position: absolute;
+    top: 320px;
+    left: 415px;
+}
+.Shop{
+    position: absolute;
+    bottom: 90px;
+    right: 40px;
+}
+.More{
+    position: absolute;
+    bottom: 150px;
+    right: 40px;
+}
+.TranHist{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+.ShopCart{
+    position: absolute;
+    top: 470px;
+    right: 20px
+}
