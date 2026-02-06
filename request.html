@@ -12,7 +12,7 @@
     <!-- bootstrap js linking-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="temp-style.css">
-    
+
     <style>
         * {
             margin: 0;
@@ -35,23 +35,29 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+        
+        .search-section {
+            flex: 1;
         }
         
         .search-box {
-            flex: 1;
             background-color: #a0a0a0;
             padding: 15px;
-            border-radius: 5px;
-            font-size: 24px;
+            border-radius: 50px;
+            font-size: 16px;
             color: #707070;
-            margin-right: 20px;
+            border: none;
+            width: 100%;
         }
         
         .nav-buttons {
             display: flex;
             flex-direction: column;
             gap: 10px;
+            align-items: center;
         }
         
         .profile-icon {
@@ -150,12 +156,18 @@
         .approve-btn.deny:hover {
             background-color: #d86565;
         }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <input type="text" class="search-box" placeholder="Search">
+            <div class="search-section">
+                <input type="text" class="search-box" id="searchInput" placeholder="Search items..." onkeyup="filterRequests()">
+            </div>
             <div class="nav-buttons">
                 <div class="profile-icon"></div>
                 <button class="profile-btn" onclick="goToProfile()">Profile</button>
@@ -176,13 +188,14 @@
             { id: 4, item: "Classroom Supplies Kit", price: "$89.99" }
         ];
         
-        function renderRequests() {
+        function renderRequests(requestsToShow = requests) {
             const container = document.getElementById('requestsContainer');
             container.innerHTML = '';
             
-            requests.forEach(request => {
+            requestsToShow.forEach(request => {
                 const row = document.createElement('div');
                 row.className = 'request-row';
+                row.id = `request-${request.id}`;
                 row.innerHTML = `
                     <div class="item-cell" onclick="goToItemDetail(${request.id})">${request.item}</div>
                     <div class="price-cell">${request.price}</div>
@@ -193,6 +206,14 @@
                 `;
                 container.appendChild(row);
             });
+        }
+        
+        function filterRequests() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = requests.filter(request => 
+                request.item.toLowerCase().includes(searchInput)
+            );
+            renderRequests(filtered);
         }
         
         function goToProfile() {
@@ -208,16 +229,31 @@
         }
         
         function approveRequest(id) {
-            //Temp alert, will implement backend functionality later
-            alert(`Request ${id} approved!`);
+            const requestIndex = requests.findIndex(r => r.id === id);
+            if (requestIndex > -1) {
+                const request = requests[requestIndex];
+                // TODO: Add approval logic (e.g., send to database, email teacher, etc.)
+                console.log(`Request ${id} approved:`, request);
+                requests.splice(requestIndex, 1);
+                document.getElementById(`request-${id}`).remove();
+                alert(`Request "${request.item}" approved!`);
+            }
         }
-        
+        //Both request and deny will probably need more functionality in the future, such as updating a database, sending notifications, etc. For now, they simply remove the request from the list and log the action.
         function denyRequest(id) {
-            //Temp alert, will implement backend functionality later
-            alert(`Request ${id} denied!`);
+            const requestIndex = requests.findIndex(r => r.id === id);
+            if (requestIndex > -1) {
+                const request = requests[requestIndex];
+                // TODO: Add denial logic (e.g., send to database, email teacher, etc.)
+                console.log(`Request ${id} denied:`, request);
+                requests.splice(requestIndex, 1);
+                document.getElementById(`request-${id}`).remove();
+                alert(`Request "${request.item}" denied!`);
+            }
         }
         
         renderRequests();
     </script>
+
 </body>
 </html>
