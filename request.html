@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Requests</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #2a2a3e;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .search-box {
+            flex: 1;
+            background-color: #a0a0a0;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 24px;
+            color: #707070;
+            margin-right: 20px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .profile-icon {
+            width: 100px;
+            height: 100px;
+            background-color: #e0e0e0;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .profile-btn {
+            background-color: #d8b8f0;
+            color: black;
+            width: 120px;
+        }
+        
+        .home-btn {
+            background-color: #a8c8f0;
+            color: black;
+            width: 120px;
+        }
+        
+        .title {
+            background-color: #e8e8e8;
+            padding: 20px;
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .requests-table {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .request-row {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .item-cell {
+            background-color: #d8c8f0;
+            padding: 20px;
+            border-radius: 5px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .item-cell:hover {
+            background-color: #c8b8e0;
+        }
+        
+        .price-cell {
+            background-color: #e8f0c8;
+            padding: 20px;
+            border-radius: 5px;
+            font-size: 20px;
+            text-align: center;
+        }
+        
+        .approve-btn {
+            background-color: #7ec97e;
+            color: black;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+            transition: background-color 0.3s;
+        }
+        
+        .approve-btn:hover {
+            background-color: #6eb96e;
+        }
+        
+        .approve-btn.deny {
+            background-color: #e87575;
+        }
+        
+        .approve-btn.deny:hover {
+            background-color: #d86565;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <input type="text" class="search-box" placeholder="Search">
+            <div class="nav-buttons">
+                <div class="profile-icon"></div>
+                <button class="profile-btn" onclick="goToProfile()">Profile</button>
+                <button class="home-btn" onclick="goToHome()">Home</button>
+            </div>
+        </div>
+        
+        <div class="title">Requests</div>
+        
+        <div class="requests-table" id="requestsContainer"></div>
+    </div>
+    
+    <script>
+        const requests = [
+            { id: 1, item: "Whiteboard Markers", price: "$25.99" },
+            { id: 2, item: "Projector Bulb", price: "$145.00" },
+            { id: 3, item: "Desk Lamp", price: "$42.50" },
+            { id: 4, item: "Classroom Supplies Kit", price: "$89.99" }
+        ];
+        
+        function renderRequests() {
+            const container = document.getElementById('requestsContainer');
+            container.innerHTML = '';
+            
+            requests.forEach(request => {
+                const row = document.createElement('div');
+                row.className = 'request-row';
+                row.innerHTML = `
+                    <div class="item-cell" onclick="goToItemDetail(${request.id})">${request.item}</div>
+                    <div class="price-cell">${request.price}</div>
+                    <div>
+                        <button class="approve-btn" onclick="approveRequest(${request.id})">Approve</button>
+                        <div>
+                            <button class="approve-btn" onclick="approveRequest(${request.id})">Approve</button>
+                            <button class="approve-btn deny" onclick="denyRequest(${request.id})">Deny</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+        
+        function goToProfile() {
+            window.location.href = 'admin-profile.html';
+        }
+        
+        function goToHome() {
+            window.location.href = 'index.html';
+        }
+        
+        function goToItemDetail(id) {
+            window.location.href = `item-detail.html?id=${id}`;
+        }
+        
+        function approveRequest(id) {
+            alert(`Request ${id} approved!`);
+        }
+        
+        function denyRequest(id) {
+            alert(`Request ${id} denied!`);
+        }
+        
+        renderRequests();
+    </script>
+</body>
+</html>
