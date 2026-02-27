@@ -1,127 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>T-Budget</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
     <style>
-        
         body {
-            margin:0;
-            padding: 40px;
-            box-sizing: border-box;
             background-color: #3b3a44;
+            padding: 2.5rem;
         }
-
-        .container{
-            max-width:900px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction:column;
-            gap:60px;
+        .app-card {
+            border: 2px solid #000;
+            background: #e9ecef;
         }
-
-        .header{
-            height:100px;
-            background-color: #8fd34f;
-            border: 2px solid black;
-            text-align: center;
-        }
-        
-        .main-box {
-            background-color: #e3e3e3;
-            border: 2px solid black;
-            width: 100%;
-            padding:20px;
-        }
-        
-        .footerbox{
-            height:80px;
-            background-color: #e3e3e3;
-            border:2px solid black;
-            width: 100%;
+        .brand-bar {
+            background: #8fd34f;
+            border: 2px solid #000;
         }
     </style>
 </head>
 <body>
+    <!-- Navbar / Header -->
+    <nav class="navbar brand-bar rounded-3 mb-4">
+        <div class="container-fluid align-items-center">
+            <span class="navbar-brand mb-0 h1 ms-3">T-Budget</span>
+            <div class="d-flex align-items-center ms-auto me-3">
+                <img id="ProfImg" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_lvjjRAVDQ-nBDq_4dy1xCyRjjDaHV-Tqcw&s"
+                     alt="profile" class="rounded-circle me-2" width="56" height="56">
+                <button class="btn btn-sm btn-purple btn-primary">Sign In</button>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
-        <div class="header"><h1>T-Budget Homepage</h1></div>
-        <div class="main-box">
-            <h2>Budget</h2>
+        <div class="row g-4">
+            <!-- Left: Home / Info -->
+            <div class="col-lg-7">
+                <div class="p-4 app-card rounded-3">
+                    <h2 class="mb-3">Welcome to T-Budget!</h2>
+                    <p>This website is intended to help manage the budget of individuals in the classroom.</p>
+                    <p>It can help students and teachers manage budgets more effectively, track income and expenses, save data, and search for products.</p>
+                    <hr>
+                    <div class="mt-3">
+                        <h5>How it works</h5>
+                        <ul>
+                            <li>Add your income</li>
+                            <li>Add expense items (name + amount)</li>
+                            <li>See total expenses and money left</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        <!-- Footer -->
+        <footer class="mt-4">
+            <div class="p-3 app-card rounded-3 text-center">
+                <small>&copy; T-Budget</small>
+            </div>
+        </footer>
+    </div>
 
-            <label>Monthly Income</label><br>
-            <input type="number" id="income" placeholder="Enter inclome"><br><br>
-            
-            
-            <label>Expense Name:</label><br>
-            <input type="text" id="income" placeholder="Enter inclome"><br><br>            
+    <!-- Bootstrap JS bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
 
+    <script>
+        // Element references
+        const incomeInput = document.getElementById('incomeInput');
+        const expenseNameInput = document.getElementById('expenseNameInput');
+        const expenseAmountInput = document.getElementById('expenseAmountInput');
+        const addButton = document.getElementById('addExpenseBtn');
+        const expenseList = document.getElementById('expenseList');
+        const totalExpensesEl = document.getElementById('totalExpenses');
+        const moneyLeftEl = document.getElementById('moneyLeft');
 
-            <label>Expense Amount:</label><br>
-            <input type="number" id="income" placeholder="Enter inclome"><br><br>
+        let totalExpenses = 0;
 
-            <button id="addExpenseBtn">Add Expense</button>
-
-
-            <h3>Expenses</h3>
-            <ul id="expenseList>"ul></ul>
-        </div>
-        <div class="footerbox">
-            <p><strong>Total Expenses:</strong> $<span id="totalExpenses">0</span></p>
-            <p><strong>Money Left:</strong> $<span id="moneyLeft">0</span></p>
-        </div>
-    </div>Í
-<script>
-    const inputs = document.querySelectorAll("input");
-
-    const incomeInput = inputs[0];
-    const expenseNameInput = inputs[1];
-    const expenseAmountInput = inputs[2];
-
-    const addButton = document.getElementById("addExpenseBtn");
-    const expenseList = document.querySelector("ul");
-
-    const totalExpensesEl = document.getElementById("totalExpenses");
-    const moneyLeftEl = document.getElementById("moneyLeft");
-
-    let totalExpenses = 0;
-
-    function updateMoneyLeft() {
-        const income = Number(incomeInput.value) || 0;
-        moneyLeftEl.textContent = income - totalExpenses;
-    }
-
-    function addExpense() {
-        const name = expenseNameInput.value;
-        const amount = Number(expenseAmountInput.value);
-
-        if (name === "" || amount <= 0) {
-            return;
+        function updateMoneyLeft() {
+            const income = Number(incomeInput.value) || 0;
+            moneyLeftEl.textContent = (income - totalExpenses).toFixed(2);
         }
 
-        const li = document.createElement("li");
-        li.textContent = name + " - $" + amount;
-        expenseList.appendChild(li);
+        function addExpense() {
+            const name = expenseNameInput.value.trim();
+            const amount = Number(expenseAmountInput.value);
 
-        totalExpenses += amount;
-        totalExpensesEl.textContent = totalExpenses;
+            if (!name || !amount || amount <= 0) return;
 
-        updateMoneyLeft();
+            const li = document.createElement('li');
+            li.className = 'list-group-item d-flex justify-content-between align-items-center';
+            li.textContent = name;
 
-        expenseNameInput.value = "";
-        expenseAmountInput.value = "";
-    }
+            const amtSpan = document.createElement('span');
+            amtSpan.className = 'badge bg-danger rounded-pill';
+            amtSpan.textContent = `$${amount.toFixed(2)}`;
 
-    incomeInput.addEventListener("input", updateMoneyLeft);
-    addButton.addEventListener("click", addExpense);
+            li.appendChild(amtSpan);
+            expenseList.appendChild(li);
 
-    expenseAmountInput.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            addExpense();
+            totalExpenses += amount;
+            totalExpensesEl.textContent = totalExpenses.toFixed(2);
+
+            updateMoneyLeft();
+
+            expenseNameInput.value = '';
+            expenseAmountInput.value = '';
+            expenseNameInput.focus();
         }
-    });
-</script>
 
+        incomeInput.addEventListener('input', updateMoneyLeft);
+        addButton.addEventListener('click', addExpense);
+
+        expenseAmountInput.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') addExpense();
+        });
+    </script>
 </body>
 </html>
-
