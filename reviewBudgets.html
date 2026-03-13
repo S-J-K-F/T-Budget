@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Review Teacher Budgets - Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 40px; 
+            background: #181a1b; 
+            color: #e0e0e0;
+        }
+        h1 { color: #fff; }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            background: #232526; 
+        }
+        th, td { 
+            padding: 12px 16px; 
+            border-bottom: 1px solid #333; 
+            text-align: left; 
+        }
+        th { 
+            background: #232526; 
+            color: #bdbdbd;
+        }
+        tr:hover { background: #24292e; }
+        .actions button { 
+            margin-right: 8px; 
+            background: #333; 
+            color: #fff; 
+            border: none; 
+            padding: 6px 12px; 
+            border-radius: 4px; 
+            cursor: pointer;
+        }
+        .actions button:hover {
+            background: #444;
+        }
+        .approved { color: #4caf50; font-weight: bold; }
+        .rejected { color: #f44336; font-weight: bold; }
+        .pending { color: #ff9800; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Review Teacher Budgets</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Teacher</th>
+                <th>Department</th>
+                <th>Requested Amount</th>
+                <th>Status</th>
+                <th>Submitted On</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="budgetTableBody">
+            <!-- Budget rows will be inserted here by JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+        // Example data; replace with real data from your backend
+        const budgets = [
+            {
+                teacher: "Jane Smith",
+                department: "Science",
+                amount: "$1,200",
+                status: "Pending",
+                submitted: "2024-06-01"
+            },
+            {
+                teacher: "John Doe",
+                department: "Math",
+                amount: "$800",
+                status: "Approved",
+                submitted: "2024-05-28"
+            },
+            {
+                teacher: "Emily Johnson",
+                department: "English",
+                amount: "$500",
+                status: "Rejected",
+                submitted: "2024-05-30"
+            }
+        ];
+
+        function renderBudgets() {
+            const tbody = document.getElementById('budgetTableBody');
+            tbody.innerHTML = '';
+            budgets.forEach((b, idx) => {
+                let statusClass = '';
+                if (b.status === 'Approved') statusClass = 'approved';
+                else if (b.status === 'Rejected') statusClass = 'rejected';
+                else statusClass = 'pending';
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${b.teacher}</td>
+                        <td>${b.department}</td>
+                        <td>${b.amount}</td>
+                        <td class="${statusClass}">${b.status}</td>
+                        <td>${b.submitted}</td>
+                        <td class="actions">
+                            ${b.status === 'Pending' ? `
+                                <button onclick="approveBudget(${idx})">Approve</button>
+                                <button onclick="rejectBudget(${idx})">Reject</button>
+                            ` : ''}
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function approveBudget(idx) {
+            budgets[idx].status = 'Approved';
+            renderBudgets();
+        }
+
+        function rejectBudget(idx) {
+            budgets[idx].status = 'Rejected';
+            renderBudgets();
+        }
+
+        renderBudgets();
+    </script>
+</body>
+</html>
