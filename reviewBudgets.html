@@ -11,6 +11,40 @@
             background: #181a1b; 
             color: #e0e0e0;
         }
+        .top-bar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 32px;
+            gap: 16px;
+        }
+        .profile-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #e0e0e0;
+        }
+        .profile-btn svg {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 4px;
+            fill: #bdbdbd;
+        }
+        .home-btn {
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .home-btn:hover {
+            background: #444;
+        }
         h1 { color: #fff; }
         table { 
             width: 100%; 
@@ -45,6 +79,16 @@
     </style>
 </head>
 <body>
+    <div class="top-bar">
+        <button class="home-btn" onclick="window.location.href='index.html'">Home</button>
+        <button class="profile-btn" onclick="window.location.href='adminProfile.html'">
+            <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M4 20c0-4 16-4 16 0" />
+            </svg>
+            <span>Profile</span>
+        </button>
+    </div>
     <h1>Review Teacher Budgets</h1>
     <table>
         <thead>
