@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+        <style>
+    .center {
+        text-align: center;
+        border: 2px solid black;
+        padding: 20px;
+        text-align: center;
+        margin: 20px;
+        background-color: #D6BBD4;
+    }
+    .container-box {        
+        border: 2px solid black;
+        padding: 20px;
+        text-align: center;
+        margin: 20px;
+        background-color: #F1D7BA;
+    }
+    #align-left {
+        text-align: left;
+    }
+    #align-right {
+        text-align: right;
+    }
+        </style>
+    <h1 class = "center">Pencils</h1>
+    <div class = "container-box">
+    <h2> Pencils are essential to the clasroom as they are used for writing, drawing, and taking notes.</h2>
+    <button id="align-left">Back</button>
+    <button id="align-right">Add to Cart</button>
+    </div>
+   
+</html>
+<script>
+(function(){
+    // inject Bootstrap CSS & JS
+    const css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css';
+    document.head.appendChild(css);
+    const style = document.createElement('style');
+    style.textContent = `
+    /* Force the buttons column to span full width so buttons sit under the description */
+    .card-body .col-md-4 {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        text-align: left !important;
+        margin-top: 1rem !important;
+    }
+    .card-body .col-md-4 .btn {
+        margin-right: .5rem;
+        margin-bottom: .5rem;
+    }`;
+    style.textContent += `
+        /* center product description */
+        .card-body .col-12.col-md-8 { text-align: center !important; }
+        .card-body .col-12.col-md-8 h2 { text-align: center !important; }
+    `;
+    document.head.appendChild(style);`  
+    const js = document.createElement('script');
+    js.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js';
+    document.head.appendChild(js);
+
+    document.addEventListener('DOMContentLoaded', function(){
+        const body = document.body;
+
+        // Create a clean Bootstrap container
+        const wrapper = document.createElement('div');
+        wrapper.className = 'container py-5';
+
+        // Grab existing elements
+        const title = body.querySelector('h1.center');
+        const box = body.querySelector('.container-box');
+
+        if (!title || !box) {
+            body.insertBefore(wrapper, body.firstChild);
+            return;
+        }
+
+        // Style title (preserve same color)
+        title.classList.add('display-5', 'fw-bold', 'text-center');
+        title.style.backgroundColor = '#D6BBD4';
+        title.style.border = '2px solid black';
+        title.style.padding = '20px';
+        title.style.margin = '0 0 20px 0';
+        title.style.borderRadius = '0.5rem';
+
+        // Build a card for content (keep same box color)
+        const card = document.createElement('div');
+        card.className = 'card shadow-sm';
+        card.style.border = 'none';
+        const cardBody = document.createElement('div');
+        cardBody.className = 'card-body';
+        cardBody.style.backgroundColor = '#F1D7BA';
+        cardBody.style.border = '2px solid black';
+        cardBody.style.padding = '20px';
+        cardBody.style.borderRadius = '0.5rem';
+
+        // Layout: text left, buttons right on larger screens
+        const row = document.createElement('div');
+        row.className = 'row align-items-center';
+
+        const colText = document.createElement('div');
+        colText.className = 'col-12 col-md-8';
+        const h2 = box.querySelector('h2');
+        if (h2) {
+            h2.classList.add('mb-0');
+            colText.appendChild(h2);
+        }
+
+        const colBtns = document.createElement('div');
+        colBtns.className = 'col-12 col-md-4 text-md-end mt-3 mt-md-0';
+
+        // Style and move buttons
+        const backBtn = box.querySelector('#align-left');
+        const addBtn = box.querySelector('#align-right');
+        if (backBtn) {
+            backBtn.className = 'btn btn-outline-dark me-2';
+            backBtn.style.borderRadius = '20px';
+            colBtns.appendChild(backBtn);
+        }
+        if (addBtn) {
+            addBtn.className = 'btn btn-dark';
+            addBtn.style.borderRadius = '20px';
+            colBtns.appendChild(addBtn);
+        }
+
+        row.appendChild(colText);
+        row.appendChild(colBtns);
+        cardBody.appendChild(row);
+        card.appendChild(cardBody);
+
+        // Assemble final layout
+        wrapper.appendChild(title);
+        wrapper.appendChild(card);
+
+        // Replace original .container-box with new wrapper (remove original box)
+        box.remove();
+        body.insertBefore(wrapper, body.firstChild);
+    });
+})();
+</script>
