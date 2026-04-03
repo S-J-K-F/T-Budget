@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>RequestIt</title>
+    <style>
+        :root {
+            --bg: #323244;
+            --card: #efefff;
+            --panel: #d4d3fa;
+            --text: #111;
+            --btn: #85a88c;
+            --btn-no: #8f7a75;
+            --panel-dark: #9b9b9d;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 960px;
+            min-height: 720px;
+            position: relative;
+            padding: 30px;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            align-items: start;
+            gap: 20px;
+        }
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        .btn-link {
+            background: #8fa5ff;
+            border: 2px solid #5460b0;
+            color: #111;
+            font-size: 2rem;
+            padding: 8px 18px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+        }
+        .profile {
+            text-align: center;
+        }
+        .profile-icon {
+            width: 74px;
+            height: 74px;
+            border-radius: 50%;
+            background: #e5e5e5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            color: #879;
+            margin-bottom: 8px;
+        }
+        .center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        .panel {
+            background: var(--panel);
+            border: 2px solid #aea9f2;
+            border-radius: 6px;
+            padding: 18px 26px;
+            min-width: 320px;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        .cart {
+            width: 320px;
+            background: #f6f6f6;
+            border: 2px solid #bbb;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+        }
+        .cart > .title {
+            background: #fff;
+            padding: 10px;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #bbb;
+        }
+        .item {
+            background: #bfbfbf;
+            padding: 12px 14px;
+            font-size: 2.2rem;
+            border-bottom: 1px solid #999;
+        }
+        .item:last-child { border-bottom: none; }
+        .more {
+            background: #9c9c9c;
+            color: #161616;
+            font-size: 2.1rem;
+            font-weight: 700;
+            padding: 12px 0;
+            border-top: 2px solid #777;
+            cursor: pointer;
+        }
+        .action-row {
+            margin-top: 24px;
+            display: flex;
+            justify-content: center;
+            gap: 80px;
+        }
+        .action-row button {
+            width: 140px;
+            height: 72px;
+            border: none;
+            color: #111;
+            font-size: 2rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .action-row .yes { background: var(--btn); }
+        .action-row .no { background: var(--btn-no); }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <div class="top-row">
+            <a href="#" class="btn-link">Home</a>
+            <div class="profile">
+                <div class="profile-icon">👤</div>
+                <div>Profile</div>
+            </div>
+        </div>
+
+        <div class="center">
+            <div class="panel">Confirm Request?</div>
+
+            <div class="cart">
+                <div class="title">Shopping Cart Preview</div>
+                <div class="item">EX: Item 1</div>
+                <div class="item">EX: Item 2</div>
+                <div class="more">More</div>
+            </div>
+
+            <div class="action-row">
+                <button class="yes" id="yesBtn">Yes</button>
+                <button class="no" id="noBtn">No</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById("yesBtn").addEventListener("click", function() {
+            alert("Request confirmed");
+        });
+        document.getElementById("noBtn").addEventListener("click", function() {
+            alert("Request canceled");
+        });
+    </script>
+</body>
+</html>
+<script>
+    document.querySelector('.more').addEventListener('click', function() {
+        window.location.href = 'shopping-cart.html';
+    });
+
+    document.querySelector('.profile').addEventListener('click', function() {
+        window.location.href = 'teacher-profile.html';
+    });
+
+    document.getElementById('yesBtn').addEventListener('click', function() {
+        fetch('/api/submit-request', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                type: 'requestApproval',
+                items: ['EX: Item 1', 'EX: Item 2'],
+                user: 'currentUser'
+            })
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Request sent to admin for approval');
+                } else {
+                    alert('Failed to send request');
+                }
+            })
+            .catch(() => alert('Error sending request'));
+    });
+
+    document.getElementById('noBtn').addEventListener('click', function() {
+        alert('Request canceled');
+    });
+</script>
