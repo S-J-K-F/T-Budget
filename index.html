@@ -1,200 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History - Budget Tracker</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>T-Budget</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            background-color: #2a2a3e;
-            font-family: Arial, sans-serif;
-            color: #333;
+            background-color: #3b3a44;
+            padding: 2.5rem;
         }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background-color: #2a2a3e;
+        .app-card {
+            border: 2px solid #000;
+            background: #e9ecef;
         }
-
-        .search-box {
-            width: 70%;
-            padding: 12px;
-            background-color: #999;
-            border: none;
-            border-radius: 4px;
-            font-size: 18px;
-            color: #666;
-        }
-
-        .user-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .avatar {
-            width: 60px;
-            height: 60px;
-            background-color: #ddd;
-            border-radius: 50%;
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .nav-buttons button {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .profile-btn {
-            background-color: #c67edb;
-            color: white;
-        }
-
-        .home-btn {
-            background-color: #7b9fd9;
-            color: white;
-        }
-
-        .title {
-            text-align: center;
-            padding: 20px;
-            background-color: #e8e8e8;
-            font-size: 48px;
-            font-weight: bold;
-            color: #333;
-            margin: 20px;
-            border-radius: 4px;
-        }
-
-        .history-container {
-            padding: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .history-row {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            gap: 20px;
-            margin-bottom: 15px;
-            align-items: center;
-        }
-
-        .item-cell {
-            background-color: #d4c5e8;
-            padding: 20px;
-            border-radius: 4px;
-            text-align: center;
-            font-size: 24px;
-            border: 3px solid #2a2a3e;
-        }
-
-        .price-cell {
-            background-color: #d4d9a8;
-            padding: 20px;
-            border-radius: 4px;
-            text-align: center;
-            font-size: 24px;
-            border: 3px solid #2a2a3e;
-        }
-
-        .action-btn {
-            background-color: #9bc197;
-            color: #333;
-            padding: 20px;
-            border: 3px solid #2a2a3e;
-            border-radius: 4px;
-            text-align: center;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .action-btn:hover {
-            background-color: #85ad84;
-        }
-
-        .hidden {
-            display: none;
+        .brand-bar {
+            background: #8fd34f;
+            border: 2px solid #000;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <input type="text" class="search-box" id="searchBox" placeholder="Search">
-        <div class="user-section">
-            <div class="avatar"></div>
-            <div class="nav-buttons">
-                <button class="profile-btn">Profile</button>
-                <button class="home-btn">Home</button>
+    <!-- Navbar / Header -->
+    <nav class="navbar brand-bar rounded-3 mb-4">
+        <div class="container-fluid align-items-center">
+            <span class="navbar-brand mb-0 h1 ms-3">T-Budget</span>
+            <div class="d-flex align-items-center ms-auto me-3">
+                <img id="ProfImg" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_lvjjRAVDQ-nBDq_4dy1xCyRjjDaHV-Tqcw&s"
+                     alt="profile" class="rounded-circle me-2" width="56" height="56">
+                <button class="btn btn-sm btn-purple btn-primary">Sign In</button>
             </div>
         </div>
+    </nav>
+
+    <div class="container">
+        <div class="row g-4">
+            <!-- Left: Home / Info -->
+            <div class="col-lg-7">
+                <div class="p-4 app-card rounded-3">
+                    <h2 class="mb-3">Welcome to T-Budget!</h2>
+                    <p>This website is intended to help manage the budget of individuals in the classroom.</p>
+                    <p>It can help students and teachers manage budgets more effectively, track income and expenses, save data, and search for products.</p>
+                    <hr>
+                    <div class="mt-3">
+                        <h5>How it works</h5>
+                        <ul>
+                            <li>Add your income</li>
+                            <li>Add expense items (name + amount)</li>
+                            <li>See total expenses and money left</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        <!-- Footer -->
+        <footer class="mt-4">
+            <div class="p-3 app-card rounded-3 text-center">
+                <small>&copy; T-Budget</small>
+            </div>
+        </footer>
     </div>
 
-    <div class="title">History</div>
+    <!-- Bootstrap JS bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
 
-    <div class="history-container"></div>
+    <script>
+        // Element references
+        const incomeInput = document.getElementById('incomeInput');
+        const expenseNameInput = document.getElementById('expenseNameInput');
+        const expenseAmountInput = document.getElementById('expenseAmountInput');
+        const addButton = document.getElementById('addExpenseBtn');
+        const expenseList = document.getElementById('expenseList');
+        const totalExpensesEl = document.getElementById('totalExpenses');
+        const moneyLeftEl = document.getElementById('moneyLeft');
+
+        let totalExpenses = 0;
+
+        function updateMoneyLeft() {
+            const income = Number(incomeInput.value) || 0;
+            moneyLeftEl.textContent = (income - totalExpenses).toFixed(2);
+        }
+
+        function addExpense() {
+            const name = expenseNameInput.value.trim();
+            const amount = Number(expenseAmountInput.value);
+
+            if (!name || !amount || amount <= 0) return;
+
+            const li = document.createElement('li');
+            li.className = 'list-group-item d-flex justify-content-between align-items-center';
+            li.textContent = name;
+
+            const amtSpan = document.createElement('span');
+            amtSpan.className = 'badge bg-danger rounded-pill';
+            amtSpan.textContent = `$${amount.toFixed(2)}`;
+
+            li.appendChild(amtSpan);
+            expenseList.appendChild(li);
+
+            totalExpenses += amount;
+            totalExpensesEl.textContent = totalExpenses.toFixed(2);
+
+            updateMoneyLeft();
+
+            expenseNameInput.value = '';
+            expenseAmountInput.value = '';
+            expenseNameInput.focus();
+        }
+//tyest
+        incomeInput.addEventListener('input', updateMoneyLeft);
+        addButton.addEventListener('click', addExpense);
+
+        expenseAmountInput.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') addExpense();
+        });
+    </script>
 </body>
 </html>
-<script>
-    // Sample purchase history data
-    const purchaseHistory = [
-        { id: 1, name: 'Laptop', price: '$899.99' },
-        { id: 2, name: 'Wireless Mouse', price: '$29.99' },
-        { id: 3, name: 'USB-C Cable', price: '$12.99' },
-        { id: 4, name: 'Monitor Stand', price: '$49.99' }
-    ];
-
-    document.addEventListener('DOMContentLoaded', () => {
-        renderHistory(purchaseHistory);
-        
-        const searchBox = document.getElementById('searchBox');
-        searchBox.addEventListener('input', filterHistory);
-    });
-
-    function renderHistory(items) {
-        const container = document.querySelector('.history-container');
-        container.innerHTML = '';
-
-        items.forEach(item => {
-            const row = document.createElement('div');
-            row.className = 'history-row';
-            row.innerHTML = `
-                <div class="item-cell" style="cursor: pointer;" onclick="goToItemDetail(${item.id})">${item.name}</div>
-                <div class="price-cell">${item.price}</div>
-                <button class="action-btn">Add to Cart Again</button>
-            `;
-            container.appendChild(row);
-        });
-    }
-
-    function filterHistory() {
-        const searchValue = document.getElementById('searchBox').value.toLowerCase();
-        const filtered = purchaseHistory.filter(item => 
-            item.name.toLowerCase().includes(searchValue)
-        );
-        renderHistory(filtered);
-    }
-
-    function goToItemDetail(itemId) {
-        window.location.href = `item-detail.html?id=${itemId}`;
-    }
-</script>
