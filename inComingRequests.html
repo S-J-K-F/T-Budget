@@ -1,0 +1,58 @@
+<script>
+    // Sample data - replace with actual API call
+    const sampleRequests = [
+        {
+            id: 1,
+            teacherName: "John Smith",
+            itemName: "Whiteboard Markers Set",
+            quantity: 5,
+            reason: "Classroom supplies",
+            date: "2024-01-15"
+        },
+        {
+            id: 2,
+            teacherName: "Jane Doe",
+            itemName: "Projector Bulb",
+            quantity: 1,
+            reason: "Equipment maintenance",
+            date: "2024-01-14"
+        }
+    ];
+
+    function loadRequests() {
+        const requestsList = document.getElementById('requestsList');
+        if (sampleRequests.length === 0) return;
+
+        requestsList.innerHTML = sampleRequests.map(request => `
+            <div class="request-card">
+                <h3>${request.teacherName}</h3>
+                <div class="request-details">
+                    <strong>Item:</strong> ${request.itemName}
+                </div>
+                <div class="request-details">
+                    <strong>Quantity:</strong> ${request.quantity}
+                </div>
+                <div class="request-details">
+                    <strong>Reason:</strong> ${request.reason}
+                </div>
+                <div class="request-details">
+                    <strong>Requested:</strong> ${request.date}
+                </div>
+                <div class="request-actions">
+                    <button class="btn-approve" onclick="approveRequest(${request.id})">Approve</button>
+                    <button class="btn-deny" onclick="denyRequest(${request.id})">Deny</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function approveRequest(id) {
+        window.location.href = `acceptedRequests.html?id=${id}`;
+    }
+
+    function denyRequest(id) {
+        window.location.href = `adminHistoryPage.html?id=${id}`;
+    }
+
+    loadRequests();
+</script>
