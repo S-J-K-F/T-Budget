@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Product: Pencil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Colors from user request */
+        .box-product-info { background: #D6BBD4; border: 1px solid #000; }
+
+        /* Make profile/home behave like clickable buttons */
+        .side-box {
+            cursor: pointer;
+            -webkit-user-select: none;
+            user-select: none;
+            transition: transform .06s ease, box-shadow .06s ease;
+        }
+        .side-box:active { transform: translateY(1px); }
+        .side-box:focus { outline: 3px solid rgba(0,0,0,0.15); outline-offset: 2px; }
+        .box-profile { background: #E194FF; border: 1px solid #000; }
+        .box-home { background: #949CFF; border: 1px solid #000; }
+        .box-gallery { background: #F1D7BA; border: 1px solid #000; }
+        .btn-back { background: #947E7E; color: #fff; border: 1px solid #000; }
+        .btn-add { background: #66956B; color: #ffffff; border: 1px solid #000; }
+
+        /* Layout tweaks */
+        .product-card, .side-box, .gallery-card { padding: 16px; border-radius:6px; }
+        .profile-icon {
+            width: 96px; height: 96px;
+            display:flex; align-items:center; justify-content:center;
+            border-radius:70%; background:#ffffff; margin:0 auto 10px;
+            border:2px solid #ccc;
+        }
+        .gallery-card img { max-width:100%; height:auto; border-radius:3px; }
+        /* Keep spacing on small screens */
+        .top-row { gap: 16px; }
+        /* Pin the side stack (profile/home) to the top-right at all widths */
+        .side-stack {
+            position: sticky;
+            top: 16px;
+            right: 16px;
+            width: 220px;
+            z-index: 1050;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* keep space so the product card doesn't get covered */
+        .top-row { padding-right: 252px; }
+        /* Dark background */
+        body { background: #1E1E1E !important; }
+        .bg-light { background: #1E1E1E !important; }
+        :root {
+            --bg: #1E1E1E;
+        }
+        body {
+            background:#1E1E1E;
+        }/* Make profile/home buttons smaller (override defaults) */
+        .side-box {
+            padding: 6px 10px !important;
+            font-size: 0.9rem;
+            width: 160px;
+            max-width: 100%;
+            border-radius: 6px;
+            display: inline-block;
+        }
+        .side-stack { width: 200px; }
+          
+    </style>
+
+</head>
+<body class="bg-light">
+    <div class="container-fluid py-4">
+
+        <div class="row align-items-start top-row mb-4">
+            <div class="col-12 col-lg-8">
+            <div class="product-card box-product-info">
+                <h5 class="mb-3">Product Info</h5>
+                <ul class="mb-0">
+                <li><strong>Name:</strong> Pencil</li>
+                <li><strong>Price:</strong> $0.50</li>
+                <li><strong>Description:</strong> Standard HB graphite pencil for writing and sketching.</li>
+                <li><strong>SKU:</strong> PNL-001</li>
+                <style>
+                /* Slightly smaller gallery image radius */
+                .gallery-card img { border-radius: 2px !important; }
+                </style>
+                <li><strong>Material:</strong> Wood & Graphite</li>
+                </ul>
+            </div>
+            </div>
+
+            <div class="col-12 col-lg-4">
+            <div class="side-stack">
+                <div class="text-center">
+                <div class="profile-icon" aria-hidden="true">
+                    <!-- simple person SVG -->
+                    <style>
+                    /* Move profile/home stack to the top-right next to Product Info on small screens */
+                    .container-fluid { position: relative; }
+                    @media (max-width: 991.98px) {
+                    .move-side-topright {
+                        position: absolute;
+                        top: -px;
+                        right: 16px;
+                        width: 220px;
+                        z-index: 1050;
+                    }
+                    /* keep space so the product card doesn't get covered */
+                    .top-row { padding-right: 252px; }
+                    }
+                    </style>
+                    <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                    var col = document.querySelector('.side-stack')?.closest('.col-12.col-lg-4');
+                    if (col) col.classList.add('move-side-topright');
+                    });
+                    </script>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#333" viewBox="0 0 16 16" role="img" aria-label="profile icon">
+                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                    <path d="M14 14s-1-4-6-4-6 4-6 4 1 0 6 0 6 0 6 0z"/>
+                    </svg>
+                </div>
+                </div>
+
+                <div class="side-box box-profile p-3 text-center">
+                <strong>Profile</strong>
+                </div>
+
+                <div class="side-box box-home p-3 text-center">
+                <strong>Home</strong>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Center: gallery / what's inside -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-12 col-md-10 col-lg-8">
+                <div class="gallery-card box-gallery p-3">
+                    <h4 class="mb-3 text-center">Product Pictures & What's Inside</h4>
+                    <div class="row">
+                        <div class="col-12 col-md-6 mb-3 mb-md-0 d-flex align-items-center justify-content-center">
+                            <!-- Placeholder images; replace src with real product images -->
+                            <img src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D'400'%20height%3D'300'%20xmlns%3D'http%3A//www.w3.org/2000/svg'%3E%3Crect%20width%3D'100%25'%20height%3D'100%25'%20fill%3D'%23ddd'%20/%3E%3Ctext%20x%3D'50%25'%20y%3D'50%25'%20dominant-baseline%3D'middle'%20text-anchor%3D'middle'%20fill%3D'%23666'%20font-size%3D'20'%3EProduct%20Image%3C/text%3E%3C/svg%3E" alt="Product pictures placeholder" />
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <h6>What's inside</h6>
+                            <ul>
+                                <li>1 × Pencil (HB)</li>
+                                <li>1 × Eraser (attached)</li>
+                                <li>Protective sleeve</li>
+                            </ul>
+                            <p class="mb-0"><small>Dimensions: 7.5 in × 0.25 in</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom: Back (left) and Add to Cart (right) -->
+        <div class="row justify-content-between align-items-center">
+            <div class="col-6 col-md-3">
+                <button class="w-100 btn btn-back p-3">Back</button>
+            </div>
+            <div class="col-6 col-md-3 text-end">
+                <button class="w-100 btn btn-add p-3">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
