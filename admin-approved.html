@@ -2,145 +2,117 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accepted Requests</title>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         body {
             background-color: #1e1e1e;
             color: #e0e0e0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial;
         }
-        
+
         header {
-            background-color: #2d2d2d;
-            padding: 1rem 2rem;
+            background: #2d2d2d;
+            padding: 15px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #444;
         }
-        
-        h1 {
-            font-size: 1.5rem;
-        }
-        
-        .nav-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-        
+
         button {
-            background-color: #0d47a1;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
+            padding: 8px 12px;
+            margin-left: 10px;
             cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
         }
-        
-        button:hover {
-            background-color: #0a3d91;
-        }
-        
+
         .container {
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
         }
-        
-        .requests-grid {
-            display: grid;
-            gap: 1.5rem;
+
+        .card {
+            background: #2d2d2d;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #4caf50;
         }
-        
-        .request-card {
-            background-color: #2d2d2d;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-left: 4px solid #0d47a1;
-        }
-        
-        .request-card h3 {
-            color: #64b5f6;
-            margin-bottom: 0.5rem;
-        }
-        
-        .request-card p {
-            margin: 0.5rem 0;
-            color: #b0b0b0;
-        }
-        
-        .request-card strong {
-            color: #e0e0e0;
-        }
-        
-        .status-badge {
+
+        .badge {
+            background: #4caf50;
+            padding: 3px 10px;
+            border-radius: 10px;
             display: inline-block;
-            background-color: #4caf50;
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            margin-top: 0.5rem;
+            margin-top: 5px;
         }
     </style>
 </head>
+
 <body>
-    <header>
-        <h1>Accepted Requests</h1>
-        <div class="nav-buttons">
-            <button onclick="goHome()">Home</button>
-            <button onclick="goProfile()">Profile</button>
-        </div>
-    </header>
-    
-    <div class="container">
-        <div class="requests-grid">
-            <div class="request-card">
-                <h3>Projector</h3>
-                <p><strong>Teacher:</strong> John Smith</p>
-                <p><strong>Department:</strong> Science</p>
-                <p><strong>Date Requested:</strong> 2024-01-15</p>
-                <p><strong>Quantity:</strong> 1</p>
-                <span class="status-badge">Accepted</span>
-            </div>
-            
-            <div class="request-card">
-                <h3>Lab Equipment Kit</h3>
-                <p><strong>Teacher:</strong> Sarah Johnson</p>
-                <p><strong>Department:</strong> Biology</p>
-                <p><strong>Date Requested:</strong> 2024-01-10</p>
-                <p><strong>Quantity:</strong> 5</p>
-                <span class="status-badge">Accepted</span>
-            </div>
-            
-            <div class="request-card">
-                <h3>Smart Board</h3>
-                <p><strong>Teacher:</strong> Mike Chen</p>
-                <p><strong>Department:</strong> Mathematics</p>
-                <p><strong>Date Requested:</strong> 2024-01-08</p>
-                <p><strong>Quantity:</strong> 2</p>
-                <span class="status-badge">Accepted</span>
-            </div>
-        </div>
+
+<header>
+    <h2>Approved Requests</h2>
+
+    <div>
+        <button onclick="goHome()">Home</button>
+        <button onclick="goProfile()">Profile</button>
     </div>
-    
-    <script>
-        function goHome() {
-            window.location.href = 'index.html';
-        }
-        
-        function goProfile() {
-            window.location.href = 'admin-profile.html';
-        }
-    </script>
+</header>
+
+<div class="container" id="list"></div>
+
+<script>
+
+// ---------------- LOGIN CHECK ----------------
+const user = JSON.parse(localStorage.getItem("user"));
+if (!user || user.role !== "admin") {
+    window.location.href = "login.html";
+}
+
+// ---------------- LOAD APPROVED ----------------
+function loadApproved() {
+    fetch("http://localhost:3000/api/requests")
+        .then(res => res.json())
+        .then(data => {
+
+            const approved = data.filter(r => r.status === "approved");
+
+            const list = document.getElementById("list");
+            list.innerHTML = "";
+
+            if (approved.length === 0) {
+                list.innerHTML = "<p>No approved requests</p>";
+                return;
+            }
+
+            approved.forEach(r => {
+                const div = document.createElement("div");
+                div.className = "card";
+
+                div.innerHTML = `
+                    <h3>${r.items.join(", ")}</h3>
+                    <p><strong>User:</strong> ${r.user}</p>
+                    <p><strong>Status:</strong> Approved</p>
+                    <span class="badge">Accepted</span>
+                `;
+
+                list.appendChild(div);
+            });
+        });
+}
+
+// ---------------- NAV ----------------
+function goHome() {
+    window.location.href = "admin-profile.html";
+}
+
+function goProfile() {
+    window.location.href = "admin-profile.html";
+}
+
+// ---------------- RUN ----------------
+loadApproved();
+
+</script>
+
 </body>
 </html>
