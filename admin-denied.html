@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Denied Requests</title>
+
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            font-family: Arial;
+        }
+
+        header {
+            background: #2d2d2d;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            padding: 8px 12px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: #2d2d2d;
+            border-left: 4px solid #d32f2f;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        .reason {
+            background: #1a1a1a;
+            padding: 10px;
+            margin-top: 10px;
+            border-left: 2px solid #d32f2f;
+            font-style: italic;
+        }
+
+        .badge {
+            background: #d32f2f;
+            padding: 3px 10px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>Denied Requests</h2>
+
+    <div>
+        <button onclick="goHome()">Home</button>
+        <button onclick="goProfile()">Profile</button>
+    </div>
+</header>
+
+<div class="container" id="list"></div>
+
+<script>
+
+// ---------------- LOGIN CHECK ----------------
+const user = JSON.parse(localStorage.getItem("user"));
+if (!user || user.role !== "admin") {
+    window.location.href = "login.html";
+}
+
+// ---------------- LOAD DENIED ----------------
+function loadDenied() {
+    fetch("http://localhost:3000/api/requests")
+        .then(res => res.json())
+        .then(data => {
+
+            const denied = data.filter(r => r.status === "denied");
+
+            const list = document.getElementById("list");
+            list.innerHTML = "";
+
+            if (denied.length === 0) {
+                list.innerHTML = "<p>No denied requests</p>";
+                return;
+            }
+
+            denied.forEach(r => {
+                const div = document.createElement("div");
+                div.className = "card";
+
+                div.innerHTML = `
+                    <h3>${r.items.join(", ")}</h3>
+                    <p><b>User:</b> ${r.user}</p>
+                    <span class="badge">DENIED</span>
+
+                    <div class="reason">
+                        Reason: Not specified
+                    </div>
+                `;
+
+                list.appendChild(div);
+            });
+        });
+}
+
+// ---------------- NAV ----------------
+function goHome() {
+    window.location.href = "admin-profile.html";
+}
+
+function goProfile() {
+    window.location.href = "admin-profile.html";
+}
+
+// ---------------- RUN ----------------
+loadDenied();
+
+</script>
+
+</body>
+</html>
