@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teacher Supply Shop</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --page-bg: #36323f;
+      --panel-bg: #464250;
+      --panel-dark: #302c38;
+      --control-bg: #3f3a49;
+      --border: #74717c;
+      --text: #f3f0f7;
+      --muted: #d4cedc;
+      --light-panel: #dedede;
+      --input-bg: #f0eef3;
+      --input-text: #16131c;
+      --purple: #de91f7;
+      --blue: #9296ff;
+      --green: #679e70;
+      --green-hover: #78b783;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--page-bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .page {
+      width: min(1200px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      background: var(--light-panel);
+      border: 2px solid var(--border);
+      padding: 20px 22px;
+      border-radius: 8px;
+      color: #111111;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 34px;
+      font-weight: 800;
+    }
+
+    .brand p {
+      margin: 5px 0 0;
+      color: #555555;
+      font-size: 15px;
+    }
+
+    .nav-button {
+      min-width: 110px;
+      height: 58px;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      background: var(--purple);
+      color: #111111;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .nav-button.home {
+      background: var(--blue);
+    }
+
+    .nav-button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.04);
+    }
+
+    .panel {
+      background: var(--panel-bg);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 16px;
+      padding: 18px;
+      border-bottom: 2px solid var(--border);
+      background: var(--control-bg);
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      height: 46px;
+      border: 2px solid #c9c2b6;
+      border-radius: 6px;
+      padding: 0 12px;
+      background: var(--input-bg);
+      color: var(--input-text);
+      outline: none;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(222, 145, 247, 0.25);
+    }
+
+    .results-bar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 13px 18px;
+      background: #393542;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .results-bar strong {
+      color: #ffffff;
+    }
+
+    .table-head,
+    .product-row {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.6fr) 1fr 120px 145px;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .table-head {
+      padding: 14px 18px;
+      background: var(--panel-dark);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .shop-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-row {
+      min-height: 84px;
+      padding: 14px 18px;
+      border-top: 1px solid #686270;
+      transition: background 0.15s ease;
+    }
+
+    .product-row:first-child {
+      border-top: 0;
+    }
+
+    .product-row:hover {
+      background: #504b5a;
+    }
+
+    .product-button {
+      border: 0;
+      background: transparent;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 12px;
+      align-items: center;
+      text-align: left;
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .product-icon {
+      width: 54px;
+      height: 54px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      background: #cfc3f2;
+      display: grid;
+      place-items: center;
+      font-size: 26px;
+    }
+
+    .product-name {
+      display: block;
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .product-hint {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .category {
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .price {
+      font-size: 18px;
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .view-button {
+      height: 42px;
+      border: 0;
+      border-radius: 6px;
+      background: var(--green);
+      color: #050505;
+      cursor: pointer;
+      font-weight: 800;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .view-button:hover {
+      background: var(--green-hover);
+      transform: translateY(-1px);
+    }
+
+    .empty {
+      display: none;
+      padding: 34px;
+      text-align: center;
+      color: var(--muted);
+      border-top: 1px solid #6b6673;
+    }
+
+    dialog {
+      width: min(560px, calc(100% - 32px));
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      background: var(--light-panel);
+      color: #111111;
+      padding: 0;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+    }
+
+    dialog::backdrop {
+      background: rgba(0, 0, 0, 0.48);
+    }
+
+    .modal-content {
+      padding: 24px;
+    }
+
+    .modal-content h2 {
+      margin: 0 0 10px;
+      font-size: 28px;
+    }
+
+    .modal-content p {
+      margin: 9px 0;
+      color: #333333;
+      line-height: 1.5;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .modal-actions button {
+      border: 0;
+      border-radius: 6px;
+      background: var(--purple);
+      color: #111111;
+      cursor: pointer;
+      font-weight: 800;
+      padding: 11px 15px;
+    }
+
+    @media (max-width: 900px) {
+      .topbar,
+      .controls {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .table-head {
+        display: none;
+      }
+
+      .results-bar {
+        flex-direction: column;
+      }
+
+      .product-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .price {
+        text-align: left;
+      }
+
+      .view-button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="brand">
+        <h1>Teacher Supply Shop</h1>
+        <p>Search classroom materials and view item details.</p>
+      </div>
+      <button class="nav-button" type="button">Profile</button>
+      <button class="nav-button home" type="button">Home</button>
+    </header>
+
+    <main class="panel">
+      <section class="controls">
+        <div class="field">
+          <label for="search">Search supplies</label>
+          <input id="search" type="search" placeholder="Search pencils, paper, markers..." />
+        </div>
+
+        <div class="field">
+          <label for="categoryFilter">Category filter</label>
+          <select id="categoryFilter">
+            <option value="All">All categories</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="priceFilter">Price range</label>
+          <select id="priceFilter">
+            <option value="All">All prices</option>
+            <option value="under-5">Under $5</option>
+            <option value="5-10">$5 to $10</option>
+            <option value="10-25">$10 to $25</option>
+            <option value="25-100">$25 to $100</option>
+            <option value="100-plus">$100 and up</option>
+          </select>
+        </div>
+      </section>
+
+      <div class="results-bar">
+        <span><strong id="resultCount">0</strong> supplies shown</span>
+      </div>
+
+      <div class="table-head">
+        <span>Item</span>
+        <span>Category</span>
+        <span>Price</span>
+        <span>Action</span>
+      </div>
+
+      <section class="shop-list" id="shopList"></section>
+      <div class="empty" id="emptyMessage">No matching supplies found.</div>
+    </main>
+  </div>
+
+  <dialog id="detailsDialog">
+    <div class="modal-content">
+      <h2 id="detailName">Item</h2>
+      <p><strong>Category:</strong> <span id="detailCategory"></span></p>
+      <p><strong>Price:</strong> <span id="detailPrice"></span></p>
+      <p id="detailDescription"></p>
+
+      <div class="modal-actions">
+        <button id="closeDialog" type="button">Close</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    const products = [
+      ["Pens", "Writing & Basic Tools", "$6.99"],
+      ["Pencils", "Writing & Basic Tools", "$5.99"],
+      ["Mechanical pencils", "Writing & Basic Tools", "$7.49"],
+      ["Colored pencils", "Writing & Basic Tools", "$8.49"],
+      ["Markers", "Writing & Basic Tools", "$6.99"],
+      ["Highlighters", "Writing & Basic Tools", "$6.49"],
+      ["Dry erase markers", "Writing & Basic Tools", "$7.99"],
+      ["Permanent markers", "Writing & Basic Tools", "$8.99"],
+      ["Chalk", "Writing & Basic Tools", "$3.99"],
+      ["Erasers", "Writing & Basic Tools", "$4.99"],
+
+      ["Printer paper", "Paper & Notebooks", "$6.99"],
+      ["Construction paper", "Paper & Notebooks", "$5.99"],
+      ["Graph paper", "Paper & Notebooks", "$5.99"],
+      ["Lined paper", "Paper & Notebooks", "$4.99"],
+      ["Sticky notes", "Paper & Notebooks", "$5.49"],
+      ["Notebooks", "Paper & Notebooks", "$12.99"],
+      ["Composition books", "Paper & Notebooks", "$9.99"],
+      ["Index cards", "Paper & Notebooks", "$3.49"],
+      ["Flashcards", "Paper & Notebooks", "$6.99"],
+      ["Poster board", "Paper & Notebooks", "$4.99"],
+
+      ["Folders", "Organization", "$8.99"],
+      ["Binders", "Organization", "$16.99"],
+      ["Binder dividers", "Organization", "$5.99"],
+      ["Paper clips", "Organization", "$2.99"],
+      ["Binder clips", "Organization", "$4.99"],
+      ["Rubber bands", "Organization", "$3.99"],
+      ["File folders", "Organization", "$7.99"],
+      ["File organizer trays", "Organization", "$14.99"],
+      ["Desk organizers", "Organization", "$16.99"],
+      ["Storage bins", "Organization", "$19.99"],
+
+      ["Whiteboard", "Classroom Management", "$89.99"],
+      ["Bulletin board", "Classroom Management", "$59.99"],
+      ["Bulletin board borders", "Classroom Management", "$5.99"],
+      ["Push pins", "Classroom Management", "$3.49"],
+      ["Magnets", "Classroom Management", "$4.99"],
+      ["Timer", "Classroom Management", "$8.99"],
+      ["Hall passes", "Classroom Management", "$6.99"],
+      ["Name tags", "Classroom Management", "$4.99"],
+      ["Seating chart materials", "Classroom Management", "$3.99"],
+      ["Behavior chart", "Classroom Management", "$7.99"],
+
+      ["Laptop", "Technology", "$649.99"],
+      ["Desktop computer", "Technology", "$799.99"],
+      ["Projector", "Technology", "$349.99"],
+      ["Smart board", "Technology", "$1499.99"],
+      ["Document camera", "Technology", "$149.99"],
+      ["Speakers", "Technology", "$29.99"],
+      ["Headphones", "Technology", "$19.99"],
+      ["Charging cables", "Technology", "$10.99"],
+      ["USB drives", "Technology", "$12.99"],
+      ["Printer", "Technology", "$179.99"],
+
+      ["Hand sanitizer", "Cleaning & Hygiene", "$5.99"],
+      ["Disinfectant wipes", "Cleaning & Hygiene", "$6.99"],
+      ["Tissues", "Cleaning & Hygiene", "$4.99"],
+      ["Paper towels", "Cleaning & Hygiene", "$7.99"],
+      ["Trash bags", "Cleaning & Hygiene", "$9.99"],
+      ["Spray cleaner", "Cleaning & Hygiene", "$5.49"],
+      ["Gloves", "Cleaning & Hygiene", "$8.99"],
+      ["Air freshener", "Cleaning & Hygiene", "$4.99"],
+      ["Mop or broom", "Cleaning & Hygiene", "$14.99"],
+      ["Dustpan", "Cleaning & Hygiene", "$6.99"],
+
+      ["Glue sticks", "Arts & Crafts", "$5.99"],
+      ["Liquid glue", "Arts & Crafts", "$3.99"],
+      ["Scissors", "Arts & Crafts", "$5.99"],
+      ["Safety scissors", "Arts & Crafts", "$4.99"],
+      ["Tape", "Arts & Crafts", "$4.49"],
+      ["Masking tape", "Arts & Crafts", "$4.99"],
+      ["Duct tape", "Arts & Crafts", "$6.99"],
+      ["Paint", "Arts & Crafts", "$11.99"],
+      ["Paintbrushes", "Arts & Crafts", "$8.99"],
+      ["Crayons", "Arts & Crafts", "$4.99"],
+
+      ["Rulers", "Teaching Aids", "$1.99"],
+      ["Protractors", "Teaching Aids", "$2.49"],
+      ["Calculators", "Teaching Aids", "$14.99"],
+      ["Math manipulatives", "Teaching Aids", "$24.99"],
+      ["Flashcards (subject-specific)", "Teaching Aids", "$7.99"],
+      ["Educational posters", "Teaching Aids", "$9.99"],
+      ["Maps", "Teaching Aids", "$14.99"],
+      ["Globes", "Teaching Aids", "$39.99"],
+      ["Science kits", "Teaching Aids", "$34.99"],
+      ["Lab materials", "Teaching Aids", "$49.99"],
+
+      ["Stickers", "Rewards & Motivation", "$4.99"],
+      ["Reward charts", "Rewards & Motivation", "$7.99"],
+      ["Certificates", "Rewards & Motivation", "$8.99"],
+      ["Small prizes", "Rewards & Motivation", "$14.99"],
+      ["Candy (if allowed)", "Rewards & Motivation", "$9.99"],
+      ["Tokens", "Rewards & Motivation", "$6.99"],
+      ["Stampers", "Rewards & Motivation", "$5.99"],
+      ["Praise notes", "Rewards & Motivation", "$4.99"],
+      ["Incentive charts", "Rewards & Motivation", "$7.99"],
+      ["Classroom currency", "Rewards & Motivation", "$5.99"],
+
+      ["Stapler", "Miscellaneous", "$9.99"],
+      ["Staples", "Miscellaneous", "$2.49"],
+      ["Staple remover", "Miscellaneous", "$3.99"],
+      ["Hole puncher", "Miscellaneous", "$8.99"],
+      ["Laminator", "Miscellaneous", "$39.99"],
+      ["Laminating sheets", "Miscellaneous", "$12.99"],
+      ["Clipboards", "Miscellaneous", "$14.99"],
+      ["Bookmarks", "Miscellaneous", "$3.99"],
+      ["Extension cords", "Miscellaneous", "$10.99"],
+      ["Power strips", "Miscellaneous", "$14.99"]
+    ].map(([name, category, price]) => ({
+      name,
+      category,
+      price,
+      priceNumber: Number(price.replace(/[$,]/g, "")),
+      description: `${name} is a useful classroom supply for teachers and students.`
+    })).sort((a, b) => a.name.localeCompare(b.name));
+
+    const shopList = document.getElementById("shopList");
+    const searchInput = document.getElementById("search");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const priceFilter = document.getElementById("priceFilter");
+    const emptyMessage = document.getElementById("emptyMessage");
+    const resultCount = document.getElementById("resultCount");
+
+    const dialog = document.getElementById("detailsDialog");
+    const detailName = document.getElementById("detailName");
+    const detailCategory = document.getElementById("detailCategory");
+    const detailPrice = document.getElementById("detailPrice");
+    const detailDescription = document.getElementById("detailDescription");
+    const closeDialog = document.getElementById("closeDialog");
+
+    function getIcon(name) {
+      const item = name.toLowerCase();
+
+      if (item.includes("pen") || item.includes("marker") || item.includes("highlighter")) return "🖊️";
+      if (item.includes("pencil") || item.includes("chalk") || item.includes("crayon")) return "✏️";
+      if (item.includes("paper") || item.includes("card") || item.includes("poster")) return "📄";
+      if (item.includes("folder") || item.includes("binder") || item.includes("organizer")) return "📁";
+      if (item.includes("board") || item.includes("chart")) return "📋";
+      if (item.includes("laptop") || item.includes("computer")) return "💻";
+      if (item.includes("printer")) return "🖨️";
+      if (item.includes("projector") || item.includes("camera") || item.includes("speaker")) return "🔌";
+      if (item.includes("clean") || item.includes("tissue") || item.includes("trash") || item.includes("glove")) return "🧼";
+      if (item.includes("glue") || item.includes("scissors") || item.includes("tape") || item.includes("paint")) return "✂️";
+      if (item.includes("map") || item.includes("globe")) return "🗺️";
+      if (item.includes("sticker") || item.includes("reward") || item.includes("prize")) return "⭐";
+
+      return "🏫";
+    }
+
+    function setupCategories() {
+      const categories = [...new Set(products.map(product => product.category))];
+
+      categories.forEach(category => {
+        const option = document.createElement("option");
+        option.value = category;
+        option.textContent = category;
+        categoryFilter.appendChild(option);
+      });
+    }
+
+    function matchesPriceRange(product) {
+      const price = product.priceNumber;
+      const range = priceFilter.value;
+
+      if (range === "under-5") return price < 5;
+      if (range === "5-10") return price >= 5 && price <= 10;
+      if (range === "10-25") return price > 10 && price <= 25;
+      if (range === "25-100") return price > 25 && price <= 100;
+      if (range === "100-plus") return price > 100;
+
+      return true;
+    }
+
+    function getVisibleProducts() {
+      const query = searchInput.value.trim().toLowerCase();
+      const selectedCategory = categoryFilter.value;
+
+      return products.filter(product => {
+        const matchesSearch =
+          product.name.toLowerCase().includes(query) ||
+          product.category.toLowerCase().includes(query) ||
+          product.price.toLowerCase().includes(query);
+
+        const matchesCategory =
+          selectedCategory === "All" || product.category === selectedCategory;
+
+        return matchesSearch && matchesCategory && matchesPriceRange(product);
+      });
+    }
+
+    function renderProducts() {
+      const visibleProducts = getVisibleProducts();
+
+      shopList.innerHTML = "";
+      emptyMessage.style.display = visibleProducts.length ? "none" : "block";
+      resultCount.textContent = visibleProducts.length;
+
+      visibleProducts.forEach(product => {
+        const row = document.createElement("article");
+        row.className = "product-row";
+
+        const productButton = document.createElement("button");
+        productButton.className = "product-button";
+        productButton.type = "button";
+        productButton.innerHTML = `
+          <span class="product-icon">${getIcon(product.name)}</span>
+          <span>
+            <span class="product-name">${product.name}</span>
+            <span class="product-hint">Click for more details</span>
+          </span>
+        `;
+        productButton.addEventListener("click", () => openDetails(product));
+
+        const category = document.createElement("div");
+        category.className = "category";
+        category.textContent = product.category;
+
+        const price = document.createElement("div");
+        price.className = "price";
+        price.textContent = product.price;
+
+        const viewButton = document.createElement("button");
+        viewButton.className = "view-button";
+        viewButton.type = "button";
+        viewButton.textContent = "View Details";
+        viewButton.addEventListener("click", () => openDetails(product));
+
+        row.append(productButton, category, price, viewButton);
+        shopList.appendChild(row);
+      });
+    }
+
+    function openDetails(product) {
+      detailName.textContent = product.name;
+      detailCategory.textContent = product.category;
+      detailPrice.textContent = product.price;
+      detailDescription.textContent = product.description;
+      dialog.showModal();
+    }
+
+    searchInput.addEventListener("input", renderProducts);
+    categoryFilter.addEventListener("change", renderProducts);
+    priceFilter.addEventListener("change", renderProducts);
+
+    closeDialog.addEventListener("click", () => {
+      dialog.close();
+    });
+
+    setupCategories();
+    renderProducts();
+  </script>
+</body>
+</html>
