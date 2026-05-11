@@ -49,7 +49,7 @@
 
     .topbar {
       display: grid;
-      grid-template-columns: 1fr auto auto;
+      grid-template-columns: 1fr auto auto auto;
       gap: 14px;
       align-items: center;
       margin-bottom: 22px;
@@ -90,6 +90,10 @@
 
     .nav-button.home {
       background: var(--blue);
+    }
+
+    .nav-button.cart-link {
+      background: var(--green);
     }
 
     .nav-button:hover {
@@ -242,7 +246,7 @@
       text-align: right;
     }
 
-    .view-button {
+    .buy-button {
       height: 42px;
       border: 0;
       border-radius: 6px;
@@ -253,7 +257,7 @@
       transition: transform 0.15s ease, background 0.15s ease;
     }
 
-    .view-button:hover {
+    .buy-button:hover {
       background: var(--green-hover);
       transform: translateY(-1px);
     }
@@ -312,14 +316,51 @@
       padding: 11px 15px;
     }
 
-    @media (max-width: 900px) {
-      .topbar,
+    .toast {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      background: var(--green);
+      color: #050505;
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-weight: 800;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 50;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .topbar {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .brand {
+        grid-column: 1 / -1;
+      }
+
       .controls {
         grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 700px) {
+      .topbar {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-button {
+        width: 100%;
+      }
+
       .table-head {
         display: none;
       }
@@ -337,8 +378,15 @@
         text-align: left;
       }
 
-      .view-button {
+      .buy-button {
         width: 100%;
+      }
+
+      .toast {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        text-align: center;
       }
     }
   </style>
@@ -351,8 +399,12 @@
         <h1>Teacher Supply Shop</h1>
         <p>Search classroom materials and view item details.</p>
       </div>
+
       <button class="nav-button" type="button">Profile</button>
       <button class="nav-button home" type="button">Home</button>
+      <button class="nav-button cart-link" type="button" onclick="window.location.href='cart.html'">
+        View Cart
+      </button>
     </header>
 
     <main class="panel">
@@ -384,6 +436,7 @@
 
       <div class="results-bar">
         <span><strong id="resultCount">0</strong> supplies shown</span>
+        <span>Sorted alphabetically A to Z</span>
       </div>
 
       <div class="table-head">
@@ -410,6 +463,8 @@
       </div>
     </div>
   </dialog>
+
+  <div class="toast" id="toast">Item added to your cart.</div>
 
   <script>
     const products = [
@@ -543,6 +598,7 @@
     const detailPrice = document.getElementById("detailPrice");
     const detailDescription = document.getElementById("detailDescription");
     const closeDialog = document.getElementById("closeDialog");
+    const toast = document.getElementById("toast");
 
     function getIcon(name) {
       const item = name.toLowerCase();
@@ -635,13 +691,13 @@
         price.className = "price";
         price.textContent = product.price;
 
-        const viewButton = document.createElement("button");
-        viewButton.className = "view-button";
-        viewButton.type = "button";
-        viewButton.textContent = "View Details";
-        viewButton.addEventListener("click", () => openDetails(product));
+        const buyButton = document.createElement("button");
+        buyButton.className = "buy-button";
+        buyButton.type = "button";
+        buyButton.textContent = "Buy Now";
+        buyButton.addEventListener("click", () => buyNow(product));
 
-        row.append(productButton, category, price, viewButton);
+        row.append(productButton, category, price, buyButton);
         shopList.appendChild(row);
       });
     }
@@ -652,6 +708,19 @@
       detailPrice.textContent = product.price;
       detailDescription.textContent = product.description;
       dialog.showModal();
+    }
+
+    function buyNow(product) {
+      const cart = JSON.parse(localStorage.getItem("teacherSupplyCart")) || [];
+      cart.push(product);
+      localStorage.setItem("teacherSupplyCart", JSON.stringify(cart));
+
+      toast.textContent = `${product.name} added to your cart.`;
+      toast.classList.add("show");
+
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 1800);
     }
 
     searchInput.addEventListener("input", renderProducts);
