@@ -36,15 +36,15 @@
 <div class="box">
     <h3>Admin Dashboard</h3>
 
-    <button class="btn btn-primary" onclick="go('admin-pending.html')">
+    <button class="btn btn-primary" onclick="go('https://htmlpreview.github.io/?https://github.com/S-J-K-F/T-Budget/blob/main/admin-pending.html')">
         Pending Requests
     </button>
 
-    <button class="btn btn-success" onclick="go('admin-approved.html')">
+    <button class="btn btn-success" onclick="go('https://htmlpreview.github.io/?https://github.com/S-J-K-F/T-Budget/blob/main/admin-approved.html')">
         Approved Requests
     </button>
 
-    <button class="btn btn-danger" onclick="go('admin-denied.html')">
+    <button class="btn btn-danger" onclick="go('https://htmlpreview.github.io/?https://github.com/S-J-K-F/T-Budget/blob/main/admin-denied.html')">
         Denied Requests
     </button>
 
@@ -57,7 +57,7 @@
 const user = JSON.parse(localStorage.getItem("user"));
 
 if (!user || user.role !== "admin") {
-    window.location.href = "login.html";
+    window.location.href = "https://htmlpreview.github.io/?https://github.com/S-J-K-F/T-Budget/blob/main/login.html";
 }
 
 function go(page) {
@@ -66,7 +66,7 @@ function go(page) {
 
 function logout() {
     localStorage.removeItem("user");
-    window.location.href = "index.html";
+    window.location.href = "https://htmlpreview.github.io/?https://github.com/S-J-K-F/T-Budget/blob/main/index.html";
 }
 </script>
 
